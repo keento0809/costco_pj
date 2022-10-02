@@ -1,18 +1,18 @@
-import { history } from "./HistoryModels";
+import { History } from "./HistoryModels";
 
-interface socialMediaLinksObj {
+interface SocialMediaLinksObj {
   twitterLink: string;
   instagramLink: string;
   facebookLink: string;
 }
 
-interface nextScheduleObj {
+interface NextScheduleObj {
   date: string;
   borrowerName: string;
   time: string;
 }
 
-interface reviewObj {
+interface ReviewObj {
   avatarUrl: string;
   borrowerName: string;
   comment: string;
@@ -23,11 +23,11 @@ export interface Holder {
   holderId: string;
   name: string;
   email: string;
-  socialMediaLinks: socialMediaLinksObj;
+  socialMediaLinks: SocialMediaLinksObj;
   averageRating: number;
   users: number;
   followers: number;
-  nextSchedules: nextScheduleObj[];
-  reviews: reviewObj[];
-  histories: history[];
+  nextSchedules: NextScheduleObj[];
+  reviews: ReviewObj[];
+  histories: History[];
 }
