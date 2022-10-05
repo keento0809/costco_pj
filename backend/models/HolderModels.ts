@@ -1,13 +1,15 @@
 import { History } from "./HistoryModels";
 import mongoose from "mongoose";
+import mongodb from "mongodb";
+import { Borrower } from "./BorrowerModels";
 
-interface SocialMediaLinksObj {
+export interface SocialMediaLinksObj {
   twitterLink: string;
   instagramLink: string;
   facebookLink: string;
 }
 
-interface NextScheduleObj {
+export interface NextScheduleObj {
   date: string;
   borrowerName: string;
   time: string;
@@ -21,22 +23,24 @@ interface ReviewObj {
 }
 
 export interface Holder {
-  holderId: string;
+  _id: mongodb.ObjectId;
   name: string;
   email: string;
-  socialMediaLinks: SocialMediaLinksObj;
-  averageRating: number;
-  users: number;
-  followers: number;
-  nextSchedules: NextScheduleObj[];
-  reviews: ReviewObj[];
-  histories: History[];
+  password: string;
+  avatar?: string;
+  location: string;
+  description: string;
+  socialMediaLinks?: SocialMediaLinksObj;
+  followers: Borrower[];
+  nextSchedules?: NextScheduleObj[];
+  reviews?: ReviewObj[];
+  histories?: History[];
 }
 
 const holderSchema = new mongoose.Schema<Holder>(
   {
-    holderId: {
-      type: String,
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     name: {
@@ -47,33 +51,33 @@ const holderSchema = new mongoose.Schema<Holder>(
       type: String,
       required: true,
     },
+    password: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      type: String,
+      required: false,
+    },
     socialMediaLinks: {
       type: {},
       required: true,
     },
-    averageRating: {
-      type: Number,
-      required: true,
-    },
-    users: {
-      type: Number,
-      required: true,
-    },
     followers: {
-      type: Number,
-      required: true,
+      type: [],
+      required: false,
     },
     nextSchedules: {
       type: [],
-      required: true,
+      required: false,
     },
     reviews: {
       type: [],
-      required: true,
+      required: false,
     },
     histories: {
       type: [],
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
