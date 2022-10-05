@@ -1,9 +1,7 @@
-import "./App.css";
-
 function App() {
   return (
-    <div className="App">
-      <h1>Costco</h1>
+    <div className='App'>
+      <h1>Costco Test by Koki</h1>
     </div>
   );
 }

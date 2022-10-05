@@ -26,5 +26,4 @@ HolderRouter
     .patch()
     .delete()
 
-
 export default HolderRouter;
