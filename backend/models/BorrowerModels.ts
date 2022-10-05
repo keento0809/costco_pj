@@ -1,18 +1,23 @@
 import { History } from "./HistoryModels";
+import { SocialMediaLinksObj, NextScheduleObj } from "./HolderModels";
 import mongoose from "mongoose";
+import mongodb from "mongodb";
 
 export interface Borrower {
-  borrowerId: string;
+  _id: mongodb.ObjectId;
   name: string;
   email: string;
   password: string;
-  histories: History[];
+  avatar?: string;
+  socialMediaLinks?: SocialMediaLinksObj;
+  nextSchedules?: NextScheduleObj[];
+  histories?: History[];
 }
 
 const borrowerSchema = new mongoose.Schema<Borrower>(
   {
-    borrowerId: {
-      type: String,
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
       require: true,
     },
     name: {
@@ -27,9 +32,17 @@ const borrowerSchema = new mongoose.Schema<Borrower>(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      required: false,
+    },
+    socialMediaLinks: {
+      type: [],
+      required: false,
+    },
     histories: {
       type: [],
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
