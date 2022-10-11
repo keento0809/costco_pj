@@ -17,6 +17,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import BaseLayout from "../layout/BaseLayout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 // const Item = styled(Paper)(({ theme }) => ({
 // 	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
 // 	...theme.typography.body2,
@@ -33,45 +36,71 @@ const bull = (
 	</Box>
 );
 const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Word of the Day
-      </Typography>
-      <Typography variant="h5" component="div">
-        be{bull}nev{bull}o{bull}lent
-      </Typography>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-        adjective
-      </Typography>
-      <Typography variant="body2">
-        well meaning and kindly.
-        <br />
-        {'"a benevolent smile"'}
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">Learn More</Button>
-    </CardActions>
-  </React.Fragment>
+	<React.Fragment>
+		<CardContent>
+			<Typography variant='h5' component='div'>
+				Sep.21 Fri 12'00
+			</Typography>
+			<Grid container spacing={2} alignItems='center' sx={{ marginTop: 2 }}>
+				<Grid item xs={2} >
+				</Grid>
+				<Grid item xs={4} textAlign='end'>
+					<AccountCircleIcon fontSize='large' />
+				</Grid>
+				<Grid item xs={4} textAlign='start'>
+					<Typography variant='h6' component='div'>
+						Atsuya Tanaka
+					</Typography>
+				</Grid>
+				<Grid item xs={2}></Grid>
+			</Grid>
+		</CardContent>
+		<CardActions>
+			<Button size='small'>See Detail</Button>
+		</CardActions>
+	</React.Fragment>
+);
+const myReviewCard = (
+	<React.Fragment>
+		<CardContent>
+			<Grid container spacing={2} alignItems='center'>
+				<Grid item xs={1}>
+					<AccountCircleIcon fontSize='large' />
+				</Grid>
+				<Grid item xs={10}>
+					<Typography variant='h6' component='div'>
+						Atsuya Tanaka
+					</Typography>
+				</Grid>
+				<Grid item xs={1}></Grid>
+			</Grid>
+			<Typography variant='body2' textAlign='center' sx={{ marginTop: 2 }}>
+				well meaning and kindly.
+				<br />
+				{'"a benevolent smile"'}
+			</Typography>
+		</CardContent>
+		<CardActions>
+			<Button size='small'>See Detail</Button>
+		</CardActions>
+	</React.Fragment>
 );
 const Profile = () => {
 	return (
-		<div>
-			<Header />
+		<BaseLayout>
 			<Container sx={{ marginBottom: 5 }}>
 				<h1>John Costoco</h1>
 				<p>costco@gmail.com</p>
-				<Box sx={{ flexGrow: 1, }}>
+				<Box sx={{ flexGrow: 1 }}>
 					<Grid container spacing={2}>
-            <Grid item xs={2} md={2}>
-              <TwitterIcon/>
+						<Grid item xs={2} md={2}>
+							<TwitterIcon />
 						</Grid>
-            <Grid item xs={2} md={2}>
-              <FacebookIcon/>
+						<Grid item xs={2} md={2}>
+							<FacebookIcon />
 						</Grid>
-            <Grid item xs={2} md={2}>
-              <InstagramIcon/>
+						<Grid item xs={2} md={2}>
+							<InstagramIcon />
 						</Grid>
 					</Grid>
 				</Box>
@@ -151,7 +180,7 @@ const Profile = () => {
 					<SwiperSlide>
 						{" "}
 						<Box sx={{ minWidth: 275 }}>
-							<Card variant='outlined'>{card}</Card>
+							<Card variant='outlined'>{myReviewCard}</Card>
 						</Box>
 					</SwiperSlide>
 					<SwiperSlide>
@@ -180,7 +209,7 @@ const Profile = () => {
 					</SwiperSlide>
 				</Swiper>
 			</Container>
-		</div>
+		</BaseLayout>
 	);
 };
 
