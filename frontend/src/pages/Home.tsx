@@ -13,7 +13,6 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export interface DatePickerProps {
   label: string;
-
   className?: string;
   disabled?: boolean;
   error?: string | boolean;
@@ -31,11 +30,12 @@ const Home: FC = () => {
 
   const handleChange = (newValue: Dayjs | null) => {
     setValue(newValue);
+    console.log();
   };
 
   return (
     <BaseLayout>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, my: 4 }}>
         <h1>Popular users</h1>
         <Grid container spacing={2}>
           <Grid item xs={2.4}>
@@ -55,10 +55,10 @@ const Home: FC = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, my: 4 }}>
         <h1>New users</h1>
         <Grid container spacing={2}>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <BasicCard
               username={'koki'}
               discription={'koki description'}
@@ -66,7 +66,7 @@ const Home: FC = () => {
               rate={3}
             />
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <BasicCard
               username={'koki'}
               discription={'koki description'}
@@ -74,7 +74,7 @@ const Home: FC = () => {
               rate={3}
             />
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <BasicCard
               username={'koki'}
               discription={'koki description'}
@@ -82,7 +82,7 @@ const Home: FC = () => {
               rate={3}
             />
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <BasicCard
               username={'koki'}
               discription={'koki description'}
@@ -92,55 +92,51 @@ const Home: FC = () => {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, my: 4 }}>
         <h1>Search by date</h1>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Stack spacing={3}>
-            <DateTimePicker
-              label='Date&Time picker'
-              value={value}
-              onChange={handleChange}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </Stack>
+          <DateTimePicker
+            label='Date&Time picker'
+            value={value}
+            onChange={handleChange}
+            renderInput={(params) => <TextField {...params} />}
+          />
         </LocalizationProvider>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={3}>
-            <BasicCard
-              username={'koki'}
-              discription={'koki description'}
-              place={'Chinatown'}
-              rate={3}
-            />
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <BasicCard
-              username={'koki'}
-              discription={'koki description'}
-              place={'Chinatown'}
-              rate={3}
-            />
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <BasicCard
-              username={'koki'}
-              discription={'koki description'}
-              place={'Chinatown'}
-              rate={3}
-            />
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <BasicCard
-              username={'koki'}
-              discription={'koki description'}
-              place={'Chinatown'}
-              rate={3}
-            />
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard
+            username={'koki'}
+            discription={'koki description'}
+            place={'Chinatown'}
+            rate={3}
+          />
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard
+            username={'koki'}
+            discription={'koki description'}
+            place={'Chinatown'}
+            rate={3}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard
+            username={'koki'}
+            discription={'koki description'}
+            place={'Chinatown'}
+            rate={3}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <BasicCard
+            username={'koki'}
+            discription={'koki description'}
+            place={'Chinatown'}
+            rate={3}
+          />
+        </Grid>
+      </Grid>
     </BaseLayout>
   );
 };
