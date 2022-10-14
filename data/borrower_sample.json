@@ -1,0 +1,19 @@
+[
+  {
+    "borrowerId": "633cb2b47304b718e1d228cc",
+    "name": "Mary Costco",
+    "email": "maryn@gmail.com",
+    "password": "$2a$12$J5aXXL0NPgYefgtQ08eeHOflapKTHf2AWa7kNmq5/xEq.3gSgFphu",
+    "passwordConfirm": "$2a$12$J5aXXL0NPgYefgtQ08eeHOflapKTHf2AWa7kNmq5/xEq.3gSgFphu",
+    "avatar": "https://illustimage.com/photo/21821.png",
+    "description": "I'm sooo excited about going to costco!",
+    "socialMediaLinks": [
+      "https://twitter.com/johm_costco",
+      "https://instagram.com/john_costco",
+      "https://facebook.com/"
+    ],
+    "histories": [
+      "633e09466e5242168751923c"
+    ]
+  }
+]
