@@ -4,36 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0e2152b-cc93-4baf-b218-22c929693e57" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/config/db.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/BorrowerModels.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/HistoryModels.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/HolderModels.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/BorrowerRoutes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/borrower_sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/history_sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/holder_sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/review_sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/schedule_sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/layout/BaseLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Home.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/UserDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/dist/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dist/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/BasicButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/BasicButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/BasicCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/BasicCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Pill.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Pill.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/layout/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/test.txt" beforeDir="false" />
-    </list>
+    <list default="true" id="e0e2152b-cc93-4baf-b218-22c929693e57" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +84,7 @@
       <workItem from="1665087508269" duration="2797000" />
       <workItem from="1665765263489" duration="2872000" />
       <workItem from="1665866329090" duration="2318000" />
-      <workItem from="1665869127715" duration="1668000" />
+      <workItem from="1665869127715" duration="1977000" />
     </task>
     <servers />
   </component>
