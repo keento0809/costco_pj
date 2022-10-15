@@ -41,7 +41,7 @@ const BasicCard: FC<Props> = (props) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 1 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label='user icon'>
@@ -57,13 +57,14 @@ const BasicCard: FC<Props> = (props) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to favorites'>
-          <FavoriteIcon />
+          <FavoriteIcon fontSize='small' />
         </IconButton>
         <Pill text={place} color={switchColor(place)} />
-
-        <IconButton aria-label='review rate'>
-          <StarRateIcon />
-          {rate}
+        <IconButton aria-label='add to favorites'>
+          <StarRateIcon fontSize='small' color='warning' />
+          <Typography variant='body2' color='text.secondary'>
+            {rate}
+          </Typography>
         </IconButton>
       </CardActions>
     </Card>

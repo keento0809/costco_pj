@@ -1,0 +1,32 @@
+[
+  {
+    "borrowerId": "633cb2b47304b718e1d228cc",
+    "name": "John Costco",
+    "email": "john@gmail.com",
+    "password": "$2a$12$J5aXXL0NPgYefgtQ08eeHOflapKTHf2AWa7kNmq5/xEq.3gSgFphu",
+    "passwordConfirm": "$2a$12$J5aXXL0NPgYefgtQ08eeHOflapKTHf2AWa7kNmq5/xEq.3gSgFphu",
+    "avatar": "https://illustimage.com/photo/21821.png",
+    "location": "Burnaby",
+    "description": "I'm a big fan of costco. I basically go to costco on Saturday and Sunday evenings",
+    "socialMediaLinks": [
+      "https://twitter.com/johm_costco",
+      "https://instagram.com/john_costco",
+      "https://facebook.com/"
+    ],
+    "followers": [
+      "633cb2b47304b718e1d228aa",
+      "633cb2b47304b718e1d228bb",
+      "633cb2b47304b718e1d228ee"
+    ],
+    "schedules": [
+      "633e09466e5242168751923c"
+    ],
+    "reviews": [
+      "633df943a1e95313a84418b2",
+      "633df943a1e95313a84418b1"
+    ],
+    "histories": [
+      "633e09466e5242168751923c"
+    ]
+  }
+]

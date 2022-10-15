@@ -12,7 +12,7 @@ const Pill: FC<Props> = (props) => {
 
   return (
     <Stack direction='row' spacing={1}>
-      <Chip label={text} color={color} />
+      <Chip label={text} color={color} size='small' />
     </Stack>
   );
 };
