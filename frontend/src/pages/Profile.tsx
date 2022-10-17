@@ -19,51 +19,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import BaseLayout from "../layout/BaseLayout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { fontSize } from "@mui/joy/styles/styleFunctionSx";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
-// const Item = styled(Paper)(({ theme }) => ({
-// 	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-// 	...theme.typography.body2,
-// 	padding: theme.spacing(1),
-// 	textAlign: "center",
-// 	color: theme.palette.text.secondary,
-// }));
-const theme = createTheme({
-	typography: {
-		fontSize:50,
-		h5: { fontSize: '1.2rem' },
-	},
-});
-
-// const theme = createTheme();
-
-// theme.typography.h5 = {
-// 	fontSize: "2rem",
-// 	"@media (min-width:600px)": {
-// 		fontSize: "1.5rem",
-// 	},
-// 	[theme.breakpoints.up("md")]: {
-// 		fontSize: "2rem",
-// 	},
-// };
-const bull = (
-	<Box
-		component='span'
-		sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-	>
-		•
-	</Box>
-);
 const card = (
-	<React.Fragment>
-
-			{/* <p>yes</p> */}
+	<>
 			<CardContent>
 				<Typography
 					variant='h5'
-					// component='h5'
-					// sx={{ fontSize: { xs: 15, sm: 25, md: 25 } }}
+					component='h5'
+					sx={{ fontSize: { xs: 15, sm: 25, md: 25 } }}
 					>
 					Sep.21 Fri 12'00
 				</Typography>
@@ -74,18 +37,18 @@ const card = (
 						container
 						alignItems={"center"}
 						justifyContent={"center"}
-					>
+						>
 						<Box>
 							<AccountCircleIcon
-								// sx={{ fontSize: { xs: 30, sm: 40, md: 45 } }}
+								sx={{ fontSize: { xs: 30, sm: 40, md: 45 } }}
 							/>
 						</Box>
 						<Box>
 							<Typography
 								variant='h6'
 								component='div'
-								// sx={{ fontSize: { xs: 15, sm: 20, md: 30 } }}
-							>
+								sx={{ fontSize: { xs: 15, sm: 20, md: 30 } }}
+								>
 								Atsuya Tanaka
 							</Typography>
 						</Box>
@@ -95,10 +58,10 @@ const card = (
 			<CardActions>
 				<Button size='small'>See Detail</Button>
 			</CardActions>
-		</React.Fragment>
+		</>
 );
 const myReviewCard = (
-	<React.Fragment>
+	<>
 		<CardContent>
 			<Grid container spacing={1} alignItems='center'>
 				<Grid item xs={12}>
@@ -129,14 +92,13 @@ const myReviewCard = (
 		<CardActions>
 			<Button size='small'>****</Button>
 		</CardActions>
-	</React.Fragment>
+	</>
 );
 const Profile = () => {
 	return (
-		<ThemeProvider theme={theme}>
 			<BaseLayout>
 				<Container sx={{ marginBottom: 5 }}>
-					<h1>John Costoco</h1>
+					<h3>John Costoco</h3>
 					<p>costco@gmail.com</p>
 					<Box sx={{ flexGrow: 1 }}>
 						<Grid container spacing={2}>
@@ -227,7 +189,6 @@ const Profile = () => {
 					</Swiper>
 				</Container>
 			</BaseLayout>
-		</ThemeProvider>
 	);
 };
 
