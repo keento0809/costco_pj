@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
 const Theme = createTheme();
 
@@ -8,7 +8,7 @@ Theme.typography.h3 = {
     fontSize: '1.5rem',
   },
   [Theme.breakpoints.up('md')]: {
-    fontSize: '3rem',
+    fontSize: '2rem',
   },
 };
 
