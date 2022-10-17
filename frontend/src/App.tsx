@@ -1,8 +1,14 @@
+import { ThemeProvider } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Theme from './theme/Theme';
+
 function App() {
   return (
-    <div className='App'>
-      <h1>Costco Test by Koki</h1>
-    </div>
+    <ThemeProvider theme={Theme}>
+      <div className='App'>
+        <Typography variant='h3'>test by Koki</Typography>
+      </div>
+    </ThemeProvider>
   );
 }
 
