@@ -7,8 +7,10 @@ import Profile from "./pages/Profile";
 function App() {
 	return (
 		<div className='App'>
-			<ThemeProvider theme={colorTheme}></ThemeProvider>
+      <ThemeProvider theme={colorTheme}>
+        
 			<Profile />
+      </ThemeProvider>
 		</div>
 	);
 }
