@@ -91,7 +91,7 @@ const Profile = () => {
 	return (
 		<BaseLayout>
 			<Container sx={{ marginBottom: 5 }}>
-				<Typography variant='h3' sx={{ marginTop: 2 }}>
+				<Typography variant='h3' sx={{ marginTop: 2 }} color={"secondary"}>
 					John Costoco
 				</Typography>
 				<Typography variant='h5' sx={{ marginTop: 2 }}>
