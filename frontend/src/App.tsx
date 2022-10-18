@@ -1,17 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { colorTheme } from "./theme/Theme";
 
-
 function App() {
-  return (
+	return (
 		<div className='App'>
-			<ThemeProvider theme={colorTheme}></ThemeProvider>
+      <ThemeProvider theme={colorTheme}>
+      </ThemeProvider>
 		</div>
 	);
 }
 
 export default App;
-
-
