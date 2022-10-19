@@ -1,13 +1,13 @@
 import {User} from "./AuthModels"
-import mongoose from "mongoose";
-import {genSalt, hash} from "bcrypt";
+import mongoose, {Document, Schema} from "mongoose";
+import bcrypt, {genSalt, hash} from "bcrypt";
 
 const borrowerSchema = new mongoose.Schema<User>(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-            require: true,
-        },
+        // _id: {
+        //     type: mongoose.Types.ObjectId,
+        //     require: true,
+        // },
         name: {
             type: String,
             required: true,
@@ -26,7 +26,7 @@ const borrowerSchema = new mongoose.Schema<User>(
             type: String,
             required: true,
             validate: {
-                validator: function(this: User, item: String): boolean{
+                validator: function (this: User, item: String): boolean {
                     return this.password === item
                 },
                 message: "Password don't match."
@@ -36,6 +36,7 @@ const borrowerSchema = new mongoose.Schema<User>(
             type: String,
             required: false,
         },
+        passwordChangedAt: Date,
         socialMediaLinks: {
             type: [],
             required: false,
@@ -52,8 +53,9 @@ const borrowerSchema = new mongoose.Schema<User>(
     {timestamps: true}
 );
 
-borrowerSchema.pre("save", async function(next) {
-    if(!this.isModified("password")) return next();
+
+borrowerSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
     const salt = await genSalt(12)
     const hashedPassword = await hash(this.password, salt)
     this.password = hashedPassword;
@@ -61,5 +63,21 @@ borrowerSchema.pre("save", async function(next) {
     next();
 })
 
+borrowerSchema.methods.checkPassword = async function (userPassword: string): Promise<boolean> {
+    const result = await bcrypt.compare(userPassword, this.password);
+    return result;
+}
 
-export default mongoose.model("Borrower", borrowerSchema);
+borrowerSchema.methods.passwordChanged = function (tokenIat: any): boolean {
+    if (this.passwordChangedAt) {
+        const changeTimestamp = parseInt(
+            (this.passwordChangedAt.getTime() / 1000).toString(),
+            10
+        );
+        //True = password Changed after token issued
+        return tokenIat < changeTimestamp
+    }
+    return false;
+}
+
+export default mongoose.model<User>("Borrower", borrowerSchema);

@@ -1,6 +1,6 @@
 
 import express from "express";
-import {register} from "../controller/auth_controllers";
+import {allUsers, login, loginHandler, register} from "../controller/auth_controllers";
 const AuthRouter = express.Router();
 
 AuthRouter
@@ -16,7 +16,7 @@ AuthRouter
 AuthRouter
     .route("/login")
     .get()
-    .post()
+    .post(login)
 
 AuthRouter
     .route("/userGuide")
@@ -30,6 +30,9 @@ AuthRouter
     .route("/notifications")
     .get()
 
-
+//Delete it later
+AuthRouter
+    .route("/borrower/allUsers")
+    .get([loginHandler], allUsers)
 
 export default AuthRouter;

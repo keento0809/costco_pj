@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import connectDB from "./config/db";
 import cors from "cors"
 import AuthRouter from "./routes/AuthRouter";
+import errorHandler from "./errors/error_handlers";
 dotenv.config();
 
 connectDB();
@@ -19,6 +20,12 @@ app.use("/user", AuthRouter);
 app.get("/", (req: Request, res: Response) => {
   res.send("Home");
 });
+
+app.all("*" , (req: Request, res: Response, next: NextFunction) => {
+  next(new Error)
+});
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`[server] server is running on port ${port}.`);

@@ -1,5 +1,6 @@
 import mongodb from "mongodb";
 import {History} from "./HistoryModels";
+import mongoose, {Document} from "mongoose";
 
 interface SocialMediaLinksObj {
     twitterLink: string;
@@ -19,15 +20,19 @@ export interface ReviewObj {
     rating: number;
 }
 
-export interface User {
-    _id: mongodb.ObjectId;
+export interface User extends mongoose.Document {
+    // _id: mongodb.ObjectId;
     name: string;
     email: string;
     password: string;
     confirmPassword?: string;
     type: string;
     avatar?: string;
+    passwordChangedAt: Date;
     histories?: History[];
     socialMediaLinks?: SocialMediaLinksObj;
-    nextSchedules?: NextScheduleObj[]
+    nextSchedules?: NextScheduleObj[];
+    checkPassword(userPassword: string) : Promise<boolean>;
+    passwordChanged(timestamp: string) : Promise<boolean>
 }
+

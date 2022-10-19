@@ -24,6 +24,7 @@ const holderSchema = new mongoose.Schema<Holder>(
         password: {
             type: String,
             required: true,
+            select: false
         },
         avatar: {
             type: String,
