@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import Theme from './theme/Theme';
 // import UserDetail from './pages/UserDetail';
 import Review from './pages/Review';
