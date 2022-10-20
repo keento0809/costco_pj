@@ -5,10 +5,11 @@ import Theme from './theme/Theme';
 // import UserDetail from './pages/UserDetail';
 import Review from './pages/Review';
 // import Home from './pages/Home';
+import { colorTheme } from "./theme/Theme";
 
 function App() {
   return (
-    <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={colorTheme}>
       <div className='App'>
         {/* <Typography variant='h3'>Responsive h3</Typography> */}
         {/* <Home /> */}
@@ -17,6 +18,7 @@ function App() {
       </div>
     </ThemeProvider>
   );
+
 }
 
 export default App;
