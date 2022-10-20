@@ -63,4 +63,12 @@ export const colorTheme = createTheme({
 	},
 });
 
+Theme.typography.body1 = {
+  fontSize: '0.8rem',
+  [Theme.breakpoints.up('md')]: {
+    fontSize: '1rem',
+    color: 'text.secondary',
+  },
+};
+
 export default Theme;
