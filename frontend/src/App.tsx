@@ -4,12 +4,11 @@ import Typography from "@mui/material/Typography";
 import { colorTheme } from "./theme/Theme";
 
 function App() {
-	return (
-		<div className='App'>
-      <ThemeProvider theme={colorTheme}>
-      </ThemeProvider>
-		</div>
-	);
+  return (
+    <div className="App">
+      <ThemeProvider theme={colorTheme}></ThemeProvider>
+    </div>
+  );
 }
 
 export default App;
