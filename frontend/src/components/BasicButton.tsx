@@ -4,16 +4,16 @@ import Button from '@mui/material/Button';
 
 interface Props {
   text: string;
-  onClick?: () => {};
+  onClickEvent?: () => {} | void;
   size: number | string;
 }
 
 const BasicButton: FC<Props> = (props) => {
-  const { text, size } = props;
+  const { text, size, onClickEvent } = props;
 
   return (
     <Stack spacing={2} direction='row'>
-      <Button variant='contained' sx={{ width: size }}>
+      <Button variant='contained' sx={{ width: size }} onClick={onClickEvent}>
         {text}
       </Button>
     </Stack>
