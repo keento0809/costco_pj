@@ -1,15 +1,75 @@
 import { createTheme } from '@mui/material/styles';
 
-const Theme = createTheme();
+const baseTheme = createTheme();
 
-Theme.typography.h3 = {
-  fontSize: '1.2rem',
-  '@media (min-width:600px)': {
-    fontSize: '1.5rem',
+export const Theme = createTheme({
+  palette: {
+    primary: {
+      main: '#0B5DA8',
+    },
+    secondary: {
+      main: '#E51D39',
+    },
+    lighttext: {
+      main: '#D3D3D3',
+    },
   },
-  [Theme.breakpoints.up('md')]: {
-    fontSize: '2rem',
+  typography: {
+    h1: {
+      fontSize: '2rem',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '2.2rem',
+      },
+    },
+    h2: {
+      fontSize: '1.7rem',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1.9rem',
+      },
+    },
+    h3: {
+      fontSize: '1.5rem',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1.7rem',
+      },
+    },
+    h4: {
+      fontSize: '1.3rem',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1.5rem',
+      },
+    },
+    h5: {
+      fontSize: '1rem',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1.2rem',
+      },
+    },
+    body1: {
+      fontSize: '0.8rem',
+      fontFamily: 'playfair',
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1rem',
+      },
+    },
+    body2: {
+      fontSize: '0.8rem',
+      fontWeight: 700,
+      [baseTheme.breakpoints.up('md')]: {
+        fontSize: '1rem',
+        fontWeight: 700,
+      },
+    },
+    button: { textTransform: 'none' },
+  },
+});
+
+baseTheme.typography.body1 = {
+  fontSize: '0.8rem',
+  [baseTheme.breakpoints.up('md')]: {
+    fontSize: '1rem',
+    color: 'text.secondary',
   },
 };
 
-export default Theme;
+export default baseTheme;
