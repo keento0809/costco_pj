@@ -1,10 +1,10 @@
 import express, { RequestHandler, Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import morgan from 'morgan';
-import connectDB from "./config/db";
+import connectDB from "./src/config/db";
 import cors from "cors"
-import AuthRouter from "./routes/AuthRouter";
-import errorHandler from "./errors/error_handlers";
+import AuthRouter from "./src/routes/AuthRouter";
+import errorHandler from "./src/errors/error_handlers";
 dotenv.config();
 
 connectDB();
