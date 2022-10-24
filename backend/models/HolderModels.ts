@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
-import {ReviewObj, User} from "./AuthModels";
+import Holder from "./Holder.i";
 
-interface Holder extends User{
-    location: string;
-    description: string;
-    followers: User[];
-    reviews?: ReviewObj[];
-}
 const holderSchema = new mongoose.Schema<Holder>(
     {
         _id: {

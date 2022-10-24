@@ -1,27 +1,37 @@
-import {RequestHandler} from "express";
+import {NextFunction, Request, Response} from "express";
 import Borrower from "../models/BorrowerModels";
 import {Types} from "mongoose";
-import jwt, {JwtPayload, Secret} from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import {catchAsync} from "../helpers/middlewares";
+import crypto from "crypto";
+import {User} from "../models/AuthModels";
+
 dotenv.config();
 
 const JWT_SECRET_KEY: string = process.env.JWT_SECRET!;
-const JWT_EXPIRES_DAY : string = process.env.JWT_EXPIRES_IN!;
+const JWT_EXPIRES_DAY: string = process.env.JWT_EXPIRES_IN!;
 
-const signToken = (id: Types.ObjectId) => jwt.sign({ id: id }, JWT_SECRET_KEY, {
+const signToken = (id: Types.ObjectId) => jwt.sign({id: id}, JWT_SECRET_KEY, {
     expiresIn: JWT_EXPIRES_DAY
-})
-/**
- * TODO: Define type of passing user
- */
+});
+
+const sendToken = (user: User, statusCode: number, res: Response) => {
+    const token = signToken(user._id);
+
+    res.status(statusCode).json({
+        status: "success",
+        token
+    });
+}
+
 export const loginHandler = catchAsync(async (req, res, next) => {
-    let token : string | undefined;
+    let token: string | undefined;
     let jwtPayload;
-    if(req.headers.authorization && req.headers.authorization?.startsWith("Bearer")) {
+    if (req.headers.authorization && req.headers.authorization?.startsWith("Bearer")) {
         token = req.headers.authorization.split(" ")[1];
     }
-    if(!token) {
+    if (!token) {
         return next(new Error("You don't have token"));
     }
     try {
@@ -31,66 +41,97 @@ export const loginHandler = catchAsync(async (req, res, next) => {
         return next(new Error("Invalid token"))
     }
     const user = await Borrower.findById(jwtPayload.id);
-    if(!user) {
+    if (!user) {
         next(new Error("The token doesn't exist"))
     }
-    if(await user!.passwordChanged(jwtPayload.iat)) {
+    if (await user!.passwordChanged(jwtPayload.iat)) {
         return next(new Error("The password changed recently. Login again"));
     }
-    res.user = user;
+    res.locals.user = user;
     next();
 })
-
-export const register: RequestHandler = async (req, res, next) => {
-    try {
-        const {type} = req.params;
-        console.log(type)
-        const newUser = await Borrower.create({
-            // _id: new mongoose.Types.ObjectId(),
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword,
-            passwordChangedAt: req.body.passwordChangedAt,
-            type
-        })
-        const token =  signToken(newUser._id)
-        res.status(200).json({
-            status: "success",
-            token,
-            user: newUser
-        })
-    } catch (error: any) {
-        res.status(500).json({
-            message: error.message
-        })
+/**
+ * TODO: Send reset token via email
+ */
+export const forgotPassword = catchAsync(async (req, res, next) => {
+    const user = await Borrower.findOne({email: req.body.email});
+    if (!user) {
+        return next(new Error("No user with the email address"))
     }
-}
+    const resetToken = user!.issuePasswordResetToken();
+    // Deactivate all validator otherwise got error
+    await user.save({validateBeforeSave: false});
+})
 
-export const login: RequestHandler = async (req, res, next) => {
-    try {
-        const {email, password} = req.body;
-        if(!email || !password) {
-            return next();
-        }
-        const borrower = await Borrower.findOne({email}).select('+password');
-        if(!borrower || await borrower!.checkPassword(password)) {
-            return next(); // Invalid email or password
-        }
-        const token = signToken(borrower._id);
-        res.status(200).json({
-            status: "success",
-            token
-        });
-    } catch (error: any) {
-        res.status(500).json({
-            message: error.message
-        })
+export const resetPassword = catchAsync(async (req, res, next) => {
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+
+    const user = await Borrower.findOne(
+        {passwordResetToken: hashedToken},
+        {passwordResetExpires: {$gt: ["passwordResetExpires", Date.now()]}}
+    );
+
+    if (!user) {
+        return next(new Error("Token is invalid or expired"))
     }
-}
 
-export const allUsers = catchAsync( async (req, res, next) => {
+    user.password = req.body.password;
+    user.confirmPassword = req.body.confirmPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    user.save();
+
+    sendToken(user, 200, res)
+})
+
+export const register = catchAsync(async (req, res, next) => {
+    const {type} = req.params;
+    console.log(type)
+    const newUser = await Borrower.create({
+        // _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword,
+        passwordChangedAt: req.body.passwordChangedAt,
+        type
+    })
+    sendToken(newUser, 200, res);
+})
+
+export const login = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+    const {email, password} = req.body;
+    if (!email || !password) {
+        return next(new Error("Please input email and password"));
+    }
+    const borrower = await Borrower.findOne({email}).select('+password');
+    if (!borrower || await borrower!.checkPassword(password)) {
+        return next(new Error("invalid")); // Invalid email or password
+    }
+    const token = signToken(borrower._id);
+
+    res.status(200).json({
+        status: "success",
+        token
+    });
+})
+
+export const updatePassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const user = await Borrower.findById(res.locals.user._id)
+    if (!await user!.checkPassword(req.body.currentPassword)) {
+        return next(new Error("Your password is wrong"))
+    }
+    user!.password = req.body.password;
+    user!.confirmPassword = req.body.confirmPassword;
+
+    await user!.save();
+})
+
+export const allUsers = catchAsync(async (req, res, next) => {
     const allUser = await Borrower.find();
     res.status(200).json({
         status: "success",
