@@ -1,8 +1,11 @@
 import {User} from "./AuthModels"
-import mongoose, {Document, Schema} from "mongoose";
+import mongoose from "mongoose";
 import bcrypt, {genSalt, hash} from "bcrypt";
+import Borrower from "./Borrower.i";
+import crypto from "crypto";
 
-const borrowerSchema = new mongoose.Schema<User>(
+
+const borrowerSchema = new mongoose.Schema<Borrower>(
     {
         // _id: {
         //     type: mongoose.Types.ObjectId,
@@ -36,7 +39,9 @@ const borrowerSchema = new mongoose.Schema<User>(
             type: String,
             required: false,
         },
-        passwordChangedAt: Date,
+        passwordChangedAt: Number,
+        passwordResetToken: String,
+        passwordResetExpires: Date,
         socialMediaLinks: {
             type: [],
             required: false,
@@ -47,7 +52,16 @@ const borrowerSchema = new mongoose.Schema<User>(
         },
         type: {
             type: String,
+            enum: ["borrower", "holder"],
             required: true
+        },
+        nextSchedules: {
+            type: [],
+            required: false
+        },
+        favourite: {
+            type: [],
+            required: false
         }
     },
     {timestamps: true}
@@ -60,6 +74,12 @@ borrowerSchema.pre("save", async function (next) {
     const hashedPassword = await hash(this.password, salt)
     this.password = hashedPassword;
     this.confirmPassword = undefined;
+    next();
+})
+
+borrowerSchema.pre("save", function(next){
+    if(!this.isModified("password" || this.isNew)) return next();
+    this.passwordChangedAt = Date.now();
     next();
 })
 
@@ -78,6 +98,20 @@ borrowerSchema.methods.passwordChanged = function (tokenIat: any): boolean {
         return tokenIat < changeTimestamp
     }
     return false;
+}
+
+borrowerSchema.methods.issuePasswordResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    console.log(resetToken)
+
+    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+    return resetToken;
 }
 
 export default mongoose.model<User>("Borrower", borrowerSchema);

@@ -28,11 +28,13 @@ export interface User extends mongoose.Document {
     confirmPassword?: string;
     type: string;
     avatar?: string;
-    passwordChangedAt: Date;
+    passwordChangedAt: number;
+    passwordResetToken?: String,
+    passwordResetExpires?: Date,
     histories?: History[];
     socialMediaLinks?: SocialMediaLinksObj;
     nextSchedules?: NextScheduleObj[];
     checkPassword(userPassword: string) : Promise<boolean>;
-    passwordChanged(timestamp: string) : Promise<boolean>
+    passwordChanged(timestamp: string) : Promise<boolean>;
+    issuePasswordResetToken() : Promise<String>
 }
-

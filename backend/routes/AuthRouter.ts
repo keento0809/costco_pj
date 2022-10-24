@@ -1,6 +1,14 @@
 
 import express from "express";
-import {allUsers, login, loginHandler, register} from "../controller/auth_controllers";
+import {
+    allUsers,
+    forgotPassword,
+    login,
+    loginHandler,
+    register,
+    resetPassword,
+    updatePassword
+} from "../controller/auth_controllers";
 const AuthRouter = express.Router();
 
 AuthRouter
@@ -9,26 +17,28 @@ AuthRouter
     .post(register);
 
 AuthRouter
-    .route("/googleLogin")
-    .get()
-    .post()
-
-AuthRouter
     .route("/login")
     .get()
     .post(login)
 
 AuthRouter
-    .route("/userGuide")
-    .get()
+    .route("/forgotPassword")
+    .post(forgotPassword)
 
 AuthRouter
-    .route("/userFaq")
-    .get()
+    .route("/resetPassword/:token")
+    .patch(resetPassword)
 
 AuthRouter
-    .route("/notifications")
-    .get()
+    .route("/updatePassword")
+    .patch([loginHandler], updatePassword)
+
+
+/**
+ * TODO:
+ *  Google login
+ *  notification
+ */
 
 //Delete it later
 AuthRouter

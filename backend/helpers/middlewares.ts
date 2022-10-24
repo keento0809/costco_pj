@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction } from "express";
+import {Request, Response, NextFunction, RequestHandler} from "express";
 
 interface catchFunc {(
     req: Request,
