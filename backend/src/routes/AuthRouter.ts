@@ -8,7 +8,7 @@ import {
     register,
     resetPassword,
     updatePassword
-} from "../controller/auth_controllers";
+} from "../../controller/auth_controllers";
 const AuthRouter = express.Router();
 
 AuthRouter

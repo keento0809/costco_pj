@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from 'morgan';
 import connectDB from "./config/db";
 import cors from "cors"
-import AuthRouter from "./routes/AuthRouter";
+import AuthRouter from "./src/routes/AuthRouter";
 import errorHandler from "./errors/error_handlers";
 dotenv.config();
 
