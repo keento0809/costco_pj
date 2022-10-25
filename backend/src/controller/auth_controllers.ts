@@ -6,11 +6,13 @@ import dotenv from "dotenv";
 import {catchAsync} from "../helpers/middlewares";
 import crypto from "crypto";
 import {User} from "../models/AuthModels";
+import {filterBody} from "../helpers/auth_helper"
 
 dotenv.config();
 
 const JWT_SECRET_KEY: string = process.env.JWT_SECRET!;
 const JWT_EXPIRES_DAY: string = process.env.JWT_EXPIRES_IN!;
+const JWT_COOKIE_EXPIRES_IN: any = process.env.JWT_COOKIE_EXPIRES_IN!;
 
 const signToken = (id: Types.ObjectId) => jwt.sign({id: id}, JWT_SECRET_KEY, {
     expiresIn: JWT_EXPIRES_DAY
@@ -18,10 +20,18 @@ const signToken = (id: Types.ObjectId) => jwt.sign({id: id}, JWT_SECRET_KEY, {
 
 const sendToken = (user: User, statusCode: number, res: Response) => {
     const token = signToken(user._id);
-
+    const cookieOption = {
+        expires: new Date(Date.now() + JWT_COOKIE_EXPIRES_IN *24 * 60 * 60 * 1000),
+        // secure: true,
+        httpOnly: true
+    }
+    res.cookie('jwt', token, cookieOption);
     res.status(statusCode).json({
         status: "success",
-        token
+        token,
+        data: {
+            user
+        }
     });
 }
 
@@ -52,6 +62,7 @@ export const loginHandler = catchAsync(async (req, res, next) => {
 })
 /**
  * TODO: Send reset token via email
+ * TODO: delete passwordResetExpires
  */
 export const forgotPassword = catchAsync(async (req, res, next) => {
     const user = await Borrower.findOne({email: req.body.email});
@@ -89,7 +100,6 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
 export const register = catchAsync(async (req, res, next) => {
     const {type} = req.params;
-    console.log(type)
     const newUser = await Borrower.create({
         // _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -103,7 +113,7 @@ export const register = catchAsync(async (req, res, next) => {
     sendToken(newUser, 200, res);
 })
 
-export const login = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const {email, password} = req.body;
     if (!email || !password) {
         return next(new Error("Please input email and password"));
@@ -120,7 +130,7 @@ export const login = catchAsync(async (req:Request, res:Response, next:NextFunct
     });
 })
 
-export const updatePassword = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+export const updatePassword = catchAsync(async (req, res, next) => {
     const user = await Borrower.findById(res.locals.user._id)
     if (!await user!.checkPassword(req.body.currentPassword)) {
         return next(new Error("Your password is wrong"))
@@ -129,6 +139,31 @@ export const updatePassword = catchAsync(async (req: Request, res: Response, nex
     user!.confirmPassword = req.body.confirmPassword;
 
     await user!.save();
+})
+
+export const updateUserInfo = catchAsync(async (req, res, next) => {
+    if (req.body.password) {
+        return next(new Error("Wrong route. Please use reset password route "));
+    }
+    const filteredBody = filterBody(req.body, "name", "email", "avatar")
+    const updatedUser = await Borrower.findByIdAndUpdate(res.locals.user._id, filteredBody, {
+        new: true,
+        runValidators: true
+    })
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            user: updatedUser
+        }
+    })
+})
+
+export const deleteUser = catchAsync(async (req, res, next) => {
+    await Borrower.findByIdAndUpdate(res.locals.user._id, {active: false});
+    res.status(204).json({
+        status: "success"
+    })
 })
 
 export const allUsers = catchAsync(async (req, res, next) => {

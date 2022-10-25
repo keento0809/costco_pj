@@ -39,7 +39,12 @@ const borrowerSchema = new mongoose.Schema<Borrower>(
             type: String,
             required: false,
         },
-        passwordChangedAt: Number,
+        active: {
+            type: Boolean,
+            default: true,
+            // select: false
+        },
+        passwordChangedAt: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,
         socialMediaLinks: {
@@ -65,8 +70,7 @@ const borrowerSchema = new mongoose.Schema<Borrower>(
         }
     },
     {timestamps: true}
-);
-
+)
 
 borrowerSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
@@ -77,9 +81,18 @@ borrowerSchema.pre("save", async function (next) {
     next();
 })
 
-borrowerSchema.pre("save", function(next){
-    if(!this.isModified("password" || this.isNew)) return next();
-    this.passwordChangedAt = Date.now();
+borrowerSchema.pre("save", function (next) {
+    if (!this.isModified("password" || this.isNew)) return next();
+    this.passwordChangedAt = new Date();
+    next();
+})
+
+/**
+ * TODO: modify method to accept all function which starts with "find"
+ */
+
+borrowerSchema.pre("find",  function(next) {
+    this.find({active : true});
     next();
 })
 

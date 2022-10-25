@@ -20,6 +20,9 @@ export interface ReviewObj {
     rating: number;
 }
 
+/**
+ * TODO: define type passwordChangedAt from number to smt
+ */
 export interface User extends mongoose.Document {
     // _id: mongodb.ObjectId;
     name: string;
@@ -28,7 +31,8 @@ export interface User extends mongoose.Document {
     confirmPassword?: string;
     type: string;
     avatar?: string;
-    passwordChangedAt: number;
+    active: boolean;
+    passwordChangedAt: Date;
     passwordResetToken?: String,
     passwordResetExpires?: Date,
     histories?: History[];

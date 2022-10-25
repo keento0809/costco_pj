@@ -1,13 +1,13 @@
 
 import express from "express";
 import {
-    allUsers,
+    allUsers, deleteUser,
     forgotPassword,
     login,
     loginHandler,
     register,
     resetPassword,
-    updatePassword
+    updatePassword, updateUserInfo
 } from "../controller/auth_controllers";
 const AuthRouter = express.Router();
 
@@ -28,6 +28,14 @@ AuthRouter
 AuthRouter
     .route("/resetPassword/:token")
     .patch(resetPassword)
+
+AuthRouter
+    .route("/updateUserInfo")
+    .patch([loginHandler], updateUserInfo)
+
+AuthRouter
+    .route("/deleteAccount")
+    .delete([loginHandler], deleteUser)
 
 AuthRouter
     .route("/updatePassword")
