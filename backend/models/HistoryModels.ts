@@ -18,10 +18,10 @@ export interface History {
 
 const historySchema = new mongoose.Schema<History>(
   {
-    _id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
+    // _id: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    // },
     schedule_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
