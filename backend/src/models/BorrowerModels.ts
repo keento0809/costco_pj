@@ -1,16 +1,11 @@
-import {User} from "./AuthModels"
+import {User} from "./UserModel"
 import mongoose from "mongoose";
 import bcrypt, {genSalt, hash} from "bcrypt";
-import Borrower from "./Borrower.i";
+
 import crypto from "crypto";
 
-
-const borrowerSchema = new mongoose.Schema<Borrower>(
+const borrowerSchema = new mongoose.Schema<User>(
     {
-        // _id: {
-        //     type: mongoose.Types.ObjectId,
-        //     require: true,
-        // },
         name: {
             type: String,
             required: true,
@@ -39,7 +34,12 @@ const borrowerSchema = new mongoose.Schema<Borrower>(
             type: String,
             required: false,
         },
-        passwordChangedAt: Number,
+        active: {
+            type: Boolean,
+            default: true,
+            // select: false
+        },
+        passwordChangedAt: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,
         socialMediaLinks: {
@@ -48,38 +48,45 @@ const borrowerSchema = new mongoose.Schema<Borrower>(
         },
         histories: {
             type: [],
-            required: false,
         },
         type: {
             type: String,
             enum: ["borrower", "holder"],
             required: true
         },
-        nextSchedules: {
+        schedules: {
             type: [],
             required: false
         },
-        favourite: {
+        favourites: {
             type: [],
             required: false
         }
     },
     {timestamps: true}
-);
-
+)
 
 borrowerSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next();
     const salt = await genSalt(12)
     const hashedPassword = await hash(this.password, salt)
     this.password = hashedPassword;
-    this.confirmPassword = undefined;
+    this.confirmPassword = hashedPassword;
     next();
 })
 
-borrowerSchema.pre("save", function(next){
-    if(!this.isModified("password" || this.isNew)) return next();
-    this.passwordChangedAt = Date.now();
+borrowerSchema.pre("save", function (next) {
+    if (!this.isModified("password" || this.isNew)) return next();
+    this.passwordChangedAt = new Date();
+    next();
+})
+
+/**
+ * TODO: modify method to accept all function which starts with "find"
+ */
+
+borrowerSchema.pre("find",  function(next) {
+    this.find({active : true});
     next();
 })
 

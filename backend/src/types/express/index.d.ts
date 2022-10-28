@@ -1,4 +1,4 @@
-import {User} from "../../models/AuthModels";
+import {User} from "../../models/UserModel";
 
 interface Locals {
     jwtPayload?: string

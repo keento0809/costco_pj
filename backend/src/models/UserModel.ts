@@ -1,13 +1,13 @@
 import mongodb from "mongodb";
 import {History} from "./HistoryModels";
-import mongoose, {Document} from "mongoose";
+import mongoose from "mongoose";
 
 interface SocialMediaLinksObj {
     twitterLink: string;
     instagramLink: string;
     facebookLink: string;
 }
-interface NextScheduleObj {
+interface scheduleObj {
     date: string;
     borrowerName: string;
     time: string;
@@ -21,19 +21,30 @@ export interface ReviewObj {
 }
 
 export interface User extends mongoose.Document {
-    // _id: mongodb.ObjectId;
+    //common schema
     name: string;
     email: string;
+    phone: string;
     password: string;
-    confirmPassword?: string;
+    confirmPassword: string;
     type: string;
     avatar?: string;
-    passwordChangedAt: number;
+    active: boolean;
+    passwordChangedAt: Date;
     passwordResetToken?: String,
     passwordResetExpires?: Date,
     histories?: History[];
     socialMediaLinks?: SocialMediaLinksObj;
-    nextSchedules?: NextScheduleObj[];
+    schedules?: scheduleObj[];
+    // For holder schema
+    description?: string;
+    location?: {};
+    followers?: User[];
+    reviews?: ReviewObj[];
+    //For Borrower schema
+    favourites?: [];
+    funcName?: string;
+
     checkPassword(userPassword: string) : Promise<boolean>;
     passwordChanged(timestamp: string) : Promise<boolean>;
     issuePasswordResetToken() : Promise<String>

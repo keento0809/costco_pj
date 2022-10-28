@@ -1,16 +1,22 @@
 import express, { RequestHandler, Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import morgan from 'morgan';
-import connectDB from "./config/db";
+import helmet from "helmet";
+import connectDB from "./src/config/db";
 import cors from "cors"
 import AuthRouter from "./src/routes/AuthRouter";
-import errorHandler from "./errors/error_handlers";
+import errorHandler from "./src/errors/error_handlers";
 dotenv.config();
 
 connectDB();
 const app: Express = express();
 const port = process.env.PORT || 5000;
 
+/**
+ * TODO: xss / data sanitize
+ */
+
+app.use(helmet())
 app.use(morgan('tiny'));
 app.use(cors())
 app.use(express.json());
